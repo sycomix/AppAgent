@@ -88,7 +88,7 @@ def parse_reflect_rsp(rsp):
         print_with_color(think, "magenta")
         if decision == "INEFFECTIVE":
             return [decision, think]
-        elif decision == "BACK" or decision == "CONTINUE" or decision == "SUCCESS":
+        elif decision in ["BACK", "CONTINUE", "SUCCESS"]:
             doc = re.findall(r"Documentation: (.*?)$", msg, re.MULTILINE)[0]
             print_with_color("Documentation:", "yellow")
             print_with_color(doc, "magenta")

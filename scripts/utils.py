@@ -29,8 +29,7 @@ def print_with_color(text: str, color=""):
 
 def draw_bbox_multi(img_path, output_path, elem_list, record_mode=False, dark_mode=False):
     imgcv = cv2.imread(img_path)
-    count = 1
-    for elem in elem_list:
+    for count, elem in enumerate(elem_list, start=1):
         try:
             top_left = elem.bbox[0]
             bottom_right = elem.bbox[1]
@@ -55,7 +54,6 @@ def draw_bbox_multi(img_path, output_path, elem_list, record_mode=False, dark_mo
                                     text_RGB=text_color, alpha=0.5)
         except Exception as e:
             print_with_color(f"ERROR: An exception occurs while labeling the image\n{e}", "red")
-        count += 1
     cv2.imwrite(output_path, imgcv)
     return imgcv
 

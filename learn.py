@@ -27,7 +27,7 @@ print_with_color("Welcome to the exploration phase of AppAgent!\nThe exploration
 print_with_color("Choose from the following modes:\n1. autonomous exploration\n2. human demonstration\n"
                  "Type 1 or 2.", "blue")
 user_input = ""
-while user_input != "1" and user_input != "2":
+while user_input not in ["1", "2"]:
     user_input = input()
 
 if not app:

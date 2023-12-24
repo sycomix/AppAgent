@@ -46,7 +46,7 @@ if not os.path.exists(auto_docs_dir) and not os.path.exists(demo_docs_dir):
     print_with_color(f"No documentations found for the app {app}. Do you want to proceed with no docs? Enter y or n",
                      "red")
     user_input = ""
-    while user_input != "y" and user_input != "n":
+    while user_input not in ["y", "n"]:
         user_input = input().lower()
     if user_input == "y":
         no_doc = True
@@ -58,12 +58,9 @@ elif os.path.exists(auto_docs_dir) and os.path.exists(demo_docs_dir):
                      f"Demonstration",
                      "blue")
     user_input = ""
-    while user_input != "1" and user_input != "2":
+    while user_input not in ["1", "2"]:
         user_input = input()
-    if user_input == "1":
-        docs_dir = auto_docs_dir
-    else:
-        docs_dir = demo_docs_dir
+    docs_dir = auto_docs_dir if user_input == "1" else demo_docs_dir
 elif os.path.exists(auto_docs_dir):
     print_with_color(f"Documentations generated from autonomous exploration were found for the app {app}. The doc base "
                      f"is selected automatically.", "yellow")
@@ -181,20 +178,7 @@ while round_count < configs["MAX_ROUNDS"]:
             break
         last_act = res[-1]
         res = res[:-1]
-        if act_name == "tap":
-            _, area = res
-            tl, br = elem_list[area - 1].bbox
-            ret = controller.tap(tl, br)
-            if ret == "ERROR":
-                print_with_color("ERROR: tap execution failed", "red")
-                break
-        elif act_name == "text":
-            _, input_str = res
-            ret = controller.text(input_str)
-            if ret == "ERROR":
-                print_with_color("ERROR: text execution failed", "red")
-                break
-        elif act_name == "long_press":
+        if act_name == "long_press":
             _, area = res
             tl, br = elem_list[area - 1].bbox
             ret = controller.long_press(tl, br)
@@ -207,6 +191,19 @@ while round_count < configs["MAX_ROUNDS"]:
             ret = controller.swipe(tl, br, swipe_dir, dist)
             if ret == "ERROR":
                 print_with_color("ERROR: long press execution failed", "red")
+                break
+        elif act_name == "tap":
+            _, area = res
+            tl, br = elem_list[area - 1].bbox
+            ret = controller.tap(tl, br)
+            if ret == "ERROR":
+                print_with_color("ERROR: tap execution failed", "red")
+                break
+        elif act_name == "text":
+            _, input_str = res
+            ret = controller.text(input_str)
+            if ret == "ERROR":
+                print_with_color("ERROR: text execution failed", "red")
                 break
         time.sleep(configs["REQUEST_INTERVAL"])
     else:

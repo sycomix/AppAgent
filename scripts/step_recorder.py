@@ -115,8 +115,13 @@ while True:
     user_input = "xxx"
     print_with_color("Choose one of the following actions you want to perform on the current screen:\ntap, text, long "
                      "press, swipe, stop", "blue")
-    while user_input.lower() != "tap" and user_input.lower() != "text" and user_input.lower() != "long press" \
-            and user_input.lower() != "swipe" and user_input.lower() != "stop":
+    while user_input.lower() not in [
+        "tap",
+        "text",
+        "long press",
+        "swipe",
+        "stop",
+    ]:
         user_input = input()
     if user_input.lower() == "tap":
         print_with_color(f"Which element do you want to tap? Choose a numeric tag from 1 to {len(elem_list)}:", "blue")
@@ -151,7 +156,7 @@ while True:
         print_with_color(f"What is the direction of your swipe? Choose one from the following options:\nup, down, left,"
                          f" right", "blue")
         user_input = ""
-        while user_input != "up" and user_input != "down" and user_input != "left" and user_input != "right":
+        while user_input not in ["up", "down", "left", "right"]:
             user_input = input()
         swipe_dir = user_input
         print_with_color(f"Which element do you want to swipe? Choose a numeric tag from 1 to {len(elem_list)}:")

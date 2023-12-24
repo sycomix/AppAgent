@@ -66,9 +66,9 @@ with open(record_path, "r") as infile:
             prompt = re.sub(r"<ui_element>", action_param, prompt_template)
         elif action_type == "swipe":
             swipe_area, swipe_dir = action_param.split(":sep:")
-            if swipe_dir == "up" or swipe_dir == "down":
+            if swipe_dir in ["up", "down"]:
                 action_type = "v_swipe"
-            elif swipe_dir == "left" or swipe_dir == "right":
+            elif swipe_dir in ["left", "right"]:
                 action_type = "h_swipe"
             prompt_template = prompts.swipe_doc_template
             prompt = re.sub(r"<swipe_dir>", swipe_dir, prompt_template)
@@ -78,7 +78,7 @@ with open(record_path, "r") as infile:
         task_desc = open(task_desc_path, "r").read()
         prompt = re.sub(r"<task_desc>", task_desc, prompt)
 
-        doc_name = resource_id + ".txt"
+        doc_name = f"{resource_id}.txt"
         doc_path = os.path.join(docs_dir, doc_name)
 
         if os.path.exists(doc_path):
